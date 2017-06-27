@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{#if title}}
+    <title>{{title}}</title>
+    {{else}}
+    <title>It's a stream thing</title>
+    {{/if}}
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    {{{body}}}
+  </body>
+</html>
