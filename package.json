@@ -4,7 +4,9 @@
   "description": "A stream overlay service to provide interactivity during our Extra Life game day events",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "start:dev": "./node_modules/.bin/nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,7 @@
     "socket.io": "^2.0.3"
   },
   "devDependencies": {
-    "eslint": "^4.8.0"
+    "eslint": "^4.8.0",
+    "nodemon": "^1.12.1"
   }
 }
