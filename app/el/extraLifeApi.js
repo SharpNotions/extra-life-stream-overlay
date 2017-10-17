@@ -1,9 +1,22 @@
+const config = require('../config');
 const request = require('request');
+const { getRoster } = require('./elTeamScraper');
+
+const teamId = process.env.TEAM_ID;
+const LIVE = config.asBool('LIVE', true);
+const DEBUG = config.asBool('DEBUG');
+console.log('[API] debug:',DEBUG);
 
 function doRequest(uri){
+  if(DEBUG){
+    console.log('[API] Requesting', uri);
+  }
   return new Promise((accept, reject) => {
     request.get({ uri: uri, json:true}, (err, response, body) => {
       if(err){
+        if(DEBUG){
+          console.log(`[API] request errored with ${err}`)
+        }
         reject(err);
       } else {
         accept(body);
@@ -16,6 +29,20 @@ function doRequest(uri){
       x.createdOn = new Date(x.createdOn);
     }
     return x;
+  });
+}
+
+function doSample(sample){
+  if(DEBUG){
+    console.log('[API] Sample: ', sample);    
+  }
+  return new Promise((resolve, reject) => {
+    const fs = require('fs');
+    const fname = require.resolve(`../../samples/${sample}`);
+    fs.readFile(fname, { encoding: 'utf8'}, (err, data) => {
+      if(err) reject(err);
+      resolve(data);
+    })
   });
 }
 
@@ -52,10 +79,11 @@ function doRequest(uri){
 
 /**
  * @typedef TeamMember
- * @prop {string} displayName - the team member's display name
  * @prop {number} participantID - the team member's participant ID
- * @prop {string} createdOn - a javascript Date incidating when the user's account was created
  * @prop {string} avatarImageURL - the URI location of the user's avatar image
+ * @prop {string} displayName - the team member's display name
+ * @prop {number} raised - the amount raised by this team member
+ * @prop {number} donations - the number of donations for this team member
  * @prop {boolean} isTeamCaptain - indicates if the member is the team captain
  */
 
@@ -66,8 +94,12 @@ function doRequest(uri){
  * @returns {Promise<ParticipantProfile>}
  */
 function getParticipantProfile(participantId){
-  let url = `https://www.extra-life.org/index.cfm?fuseaction=donorDrive.participant&participantID=${participantId}&format=json`;
-  return doRequest(url);
+  if(LIVE){
+    let url = `https://www.extra-life.org/index.cfm?fuseaction=donorDrive.participant&participantID=${participantId}&format=json`;
+    return doRequest(url);
+  } else {
+    return doSample('participant.json');
+  }
 }
 
 /**
@@ -76,8 +108,12 @@ function getParticipantProfile(participantId){
  * @returns {Promise<Donation[]>}
  */
 function getParticipantDonations(participantId){
-  let url = `https://www.extra-life.org/index.cfm?fuseaction=donordrive.participantDonations&participantID=${participantId}&format=json`
-  return doRequest(url);
+  if(LIVE){
+    let url = `https://www.extra-life.org/index.cfm?fuseaction=donordrive.participantDonations&participantID=${participantId}&format=json`
+    return doRequest(url);
+  } else {
+    return doSample('donations.json');
+  }
 }
 
 /**
@@ -85,9 +121,13 @@ function getParticipantDonations(participantId){
  * @param {*} teamId 
  * @returns {Promise<TeamInfo>}
  */
-function getTeamInfo(teamId){
-  let url = `https://www.extra-life.org/index.cfm?fuseaction=donordrive.team&teamID=${teamId}&format=json`;
-  return doRequest(url);
+function getTeamInfo(){
+  if(LIVE){
+    let url = `https://www.extra-life.org/index.cfm?fuseaction=donorDrive.team&teamID=${teamId}&format=json`;
+    return doRequest(url);
+  } else {
+    return doSample('team.json');
+  }
 }
 
 /**
@@ -95,9 +135,11 @@ function getTeamInfo(teamId){
  * @param {*} teamId - the indentifier of the team to lookup
  * @returns {Promise<TeamMember[]>}
  */
-function getTeamRoster(teamId){
-  let url = `https://www.extra-life.org/index.cfm?fuseaction=donordrive.teamParticipants&teamID=${teamId}&format=json`;
-  return doRequest(url);
+function getTeamRoster(){
+  if(DEBUG){
+    console.log('[API] Requesting roster');
+  }
+  return getRoster();
 }
 
 module.exports = {
