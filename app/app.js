@@ -1,24 +1,24 @@
 const cfg = require('./config');
-var http = require('http');
-var path = require('path');
-var express = require('express');
-var hbs = require('express-handlebars');
-var SocketServer = require('socket.io');
+const http = require('http');
+const path = require('path');
+const express = require('express');
+const hbs = require('express-handlebars');
+const SocketServer = require('socket.io');
 
-var routes = require('./routes/routes');
-var sockets = require('./sockets/sockets');
+const routes = require('./routes/routes');
+const sockets = require('./sockets/sockets');
 
-var appRootDir = __dirname;
-var staticDir = path.join(appRootDir, 'content');
-var viewsDir = path.join(appRootDir, 'views');
-var layoutsDir = path.join(appRootDir, 'views', 'layouts');
-var partialsDir = path.join(appRootDir, 'views', 'layouts');
+const appRootDir = __dirname;
+const staticDir = path.join(appRootDir, 'content');
+const viewsDir = path.join(appRootDir, 'views');
+const layoutsDir = path.join(appRootDir, 'views', 'layouts');
+const partialsDir = path.join(appRootDir, 'views', 'layouts');
 
-var webapp = express();
-var server = http.createServer(webapp);
-var io = SocketServer(server);
-var publicSockets = io.of('/public');
-var extraLife = require('./el');
+const webapp = express();
+const server = http.createServer(webapp);
+const io = SocketServer(server);
+const publicSockets = io.of('/public');
+const extraLife = require('./el');
 
 webapp.set('views', viewsDir);
 webapp.engine('hbs', hbs({

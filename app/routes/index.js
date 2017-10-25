@@ -1,7 +1,7 @@
 'use strict';
 
 function siteIndex(app){
-  app.get('/', function(req,res){
+  app.get('/', (req,res) => {
     res.render('index', {title: 'Streaming Central!'});
   });
 }

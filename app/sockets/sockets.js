@@ -1,16 +1,16 @@
 'use strict';
 
-var scanDirectory = require('../scanDirectory');
-var path = require('path');
+const scanDirectory = require('../scanDirectory');
+const path = require('path');
 
-var publicFunctions = [];
+const publicFunctions = [];
 
 scanDirectory(path.join(__dirname, 'public')).forEach(file => {
   publicFunctions.push(require(file));
 });
 
-var setup = {
-  public: function(io){
+const setup = {
+  public: (io) => {
     io.on('connect', socket => {
       console.log('Hello public user');
       socket.on('disconnect', () => {

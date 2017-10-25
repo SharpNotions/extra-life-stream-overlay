@@ -2,7 +2,7 @@
 
 var scanDirectory = require('../scanDirectory');
 
-function routes(app){
+const routes = (app) => {
   scanDirectory(__dirname).forEach(file => {
     if(file !== __filename){
       require(file)(app);
