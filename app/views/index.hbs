@@ -55,20 +55,12 @@
   </div>
 </div>
 <script>
-  var roomName = 'waiting room'
-  var testFunction = function(){ console.log('sad trombone'); };
-  document.getElementById('test_button').addEventListener('click', function(){ testFunction(); });
-
   var client = io('/public');
   client.on('connect', function(){
     console.log('connected...');
     client.emit('join', { }, function(data){
       console.log('result of public', data);
     });
-
-    testFunction = function(){
-      client.emit('applause');
-    }
   });
   
 </script>

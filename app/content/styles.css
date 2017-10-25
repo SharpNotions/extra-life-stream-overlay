@@ -28,13 +28,31 @@ html,body{
 }
 #logos{
   margin-left:14px;
+  margin-top:12px;
+}
+#el_logo{
+  margin-left:40px;
+  margin-right:40px;
 }
 #top_center{
   flex-grow: 1;
   font-size: 26px;
+  margin-top: 13px;
 }
 #top .highlight{
   color: #f8991d;
+}
+#timers {
+  margin-top:5px;
+}
+#timers div{
+  text-align: right;
+}
+#timers .highlight{
+  display:inline-block;
+  width:65px;
+  padding-right:10px;
+  text-align: right;
 }
 
 #right{
@@ -49,17 +67,23 @@ html,body{
 #right .highlight{
   color:#2e1a46;
 }
+#right h1{
+  margin-top:0;
+  margin-bottom:4px;
+}
 #roster{
   flex-grow:2;
+  padding-left:12px;
+  padding-top:20px;
+}
+#roster h1{
+  font-weight: normal;
 }
 #roster ol{
   margin-top:3px;
   margin-bottom:0;
   padding-left:20px;
-}
-#right h1{
-  margin-top:0;
-  margin-bottom:4px;
+  font-size:18px;
 }
 #current_action{
   background-color:#2e1a46;
@@ -118,8 +142,11 @@ html,body{
   background-color: #f8991d;
 }
 #progress_amount{
-  position: absolute;;
+  /* position: absolute;
   top:4px;
-  right:14px;
-  text-shadow: #000 0 0 2px;
+  right:16px; */
+  text-align: right;
+  padding: 4px 16px 0 0;
+  color: #2e1a46;
+  white-space: nowrap;
 }
