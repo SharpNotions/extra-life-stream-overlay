@@ -1,5 +1,4 @@
-'use strict';
-
+const cfg = require('./config');
 var http = require('http');
 var path = require('path');
 var express = require('express');
@@ -19,6 +18,7 @@ var webapp = express();
 var server = http.createServer(webapp);
 var io = SocketServer(server);
 var publicSockets = io.of('/public');
+var extraLife = require('./el');
 
 webapp.set('views', viewsDir);
 webapp.engine('hbs', hbs({
@@ -38,5 +38,6 @@ sockets.public(publicSockets);
 module.exports = {
   web: webapp,
   server: server,
-  publicSockets: publicSockets
+  publicSockets: publicSockets,
+  extraLifeApi: extraLife
 };

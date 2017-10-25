@@ -7,6 +7,15 @@ const LIVE = config.asBool('LIVE', true);
 const DEBUG = config.asBool('DEBUG');
 console.log('[API] debug:',DEBUG);
 
+function processResponse(response){
+  if(response instanceof Array){
+    response.forEach(y => y.createdOn = new Date(y.createdOn));
+  } else if (response && response.createdOn){
+    response.createdOn = new Date(response.createdOn);
+  }
+  return response;
+}
+
 function doRequest(uri){
   if(DEBUG){
     console.log('[API] Requesting', uri);
@@ -22,14 +31,7 @@ function doRequest(uri){
         accept(body);
       }
     });
-  }).then(x => {
-    if(x instanceof Array){
-      x.forEach(y => y.createdOn = new Date(y.createdOn));
-    } else if (x && x.createdOn){
-      x.createdOn = new Date(x.createdOn);
-    }
-    return x;
-  });
+  }).then(processResponse);
 }
 
 function doSample(sample){
@@ -41,9 +43,9 @@ function doSample(sample){
     const fname = require.resolve(`../../samples/${sample}`);
     fs.readFile(fname, { encoding: 'utf8'}, (err, data) => {
       if(err) reject(err);
-      resolve(data);
+      resolve(JSON.parse(data));
     })
-  });
+  }).then(processResponse);
 }
 
 /**

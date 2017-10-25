@@ -1,0 +1,125 @@
+*{
+  font-family: 'Calibri';
+  box-sizing: border-box;
+}
+html,body{
+  padding:0;
+  margin:0;
+  background-color: transparent;
+}
+#overlay_root{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width:1280px;
+  height:720px;
+  background: url('frame.png');
+  background-repeat: no-repeat;
+  color:white;
+}
+#top{
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:96px;
+  display:flex;
+  font-size:22px;
+}
+#logos{
+  margin-left:14px;
+}
+#top_center{
+  flex-grow: 1;
+  font-size: 26px;
+}
+#top .highlight{
+  color: #f8991d;
+}
+
+#right{
+  position: absolute;
+  top:96px;
+  right: 0;
+  width: 252px;
+  bottom: 0;
+  display:flex;
+  flex-direction: column;
+}
+#right .highlight{
+  color:#2e1a46;
+}
+#roster{
+  flex-grow:2;
+}
+#roster ol{
+  margin-top:3px;
+  margin-bottom:0;
+  padding-left:20px;
+}
+#right h1{
+  margin-top:0;
+  margin-bottom:4px;
+}
+#current_action{
+  background-color:#2e1a46;
+  min-height:98px;
+}
+#current_action h1{
+  font-size: 30px;
+  text-align: center;
+  font-weight: normal;
+}
+#current_action h2{
+  text-align: center;
+  font-size:24px;
+  color:#f8991d;
+  margin-top:0;
+  font-weight: normal;
+}
+#cam_placeholder{
+  height:190px;
+}
+.no-cam #cam_placeholder{
+  display:none;
+}
+#bottom{
+  position:absolute;
+  left:0;
+  right:257px;
+  bottom:0;
+  height:49px;
+}
+#progress{
+  border-radius: 8px;
+  border: 2px solid white;
+  background: linear-gradient(to bottom, #302b3b, #71658b 50%);
+  position: absolute;
+  left:14px;
+  width: 623px;
+  height: 33px;
+  bottom: 5px;
+  color:white;
+  font-size:18px;
+  overflow: hidden;
+}
+#goal_amount{
+  position: absolute;
+  top:4px;
+  bottom:0;
+  right:8px;
+}
+#bar{
+  position: absolute;;
+  top:0;
+  left:0;
+  bottom:0;
+  width:26%;
+  background-color: #f8991d;
+}
+#progress_amount{
+  position: absolute;;
+  top:4px;
+  right:14px;
+  text-shadow: #000 0 0 2px;
+}

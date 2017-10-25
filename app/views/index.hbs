@@ -1,6 +1,59 @@
-Hello!
-<button id="test_button">Test it!</button>
-
+<div id="overlay_root">
+  <div id="top">
+    <div id="logos">
+      <img src="/content/sn-logo.png" id="sn_logo" />
+      <img src="/content/el-logo.png" id="el_logo" />
+    </div>
+    <div id="top_center">
+      <div id="allstar">
+        Top Team Member:
+        <span class="highlight">Shawn Carr $285</span>
+      </div>
+      <div id="recent_donation">
+        Latest Donation:
+        <span class="highlight">$25 from Anonymous for Bill Smith</span>
+      </div>
+    </div>
+    <div id="timers">
+      <div>
+        Local time: <span class="highlight">13:22</span>
+      </div>
+      <div>
+        Time played: <span class="highlight">4:22</span>
+      </div>
+      <div>
+        Time to go: <span class="highlight">19:38</span>
+      </div>
+    </div>
+  </div>
+  <div id="right">
+    <div id="roster">
+      <h1>Team Roster</h1>
+      <ol>
+        <li>Shawn Carr - <span class="highlight">$285</span></li>
+        <li>Bill Smith - <span class="highlight">$170</span></li>
+        <li>Andrew Rachunok - <span class="highlight">$100</span></li>
+        <li>Greg Kohl - <span class="highlight">$100</span></li>
+        <li>Ryan Chatterton - <span class="highlight">$50</span></li>
+        <li>Adam Macumber - <span class="highlight">$35</span></li>
+        <li>Samantha Castronova - <span class="highlight">$15</span></li>
+      </ol>
+    </div>
+    <div id="current_action">
+      <h1>Currently Playing</h1>
+      <h2>Mario Kart 8</h2>
+    </div>
+    <div id="cam_placeholder"></div>
+  </div>
+  <div id="bottom">
+    <div id="progress">
+      <div id="goal_amount">Goal: $2500</div>
+      <div id="bar">
+        <div id="progress_amount">Total Raised: $655</div>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
   var roomName = 'waiting room'
   var testFunction = function(){ console.log('sad trombone'); };

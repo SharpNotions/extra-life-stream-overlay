@@ -15,7 +15,7 @@ var setup = {
       console.log('Hello public user');
       socket.on('disconnect', () => {
         console.log('Goodbye public user');
-      })
+      });
       publicFunctions.forEach(fn => fn(io, socket));
     });
   }
