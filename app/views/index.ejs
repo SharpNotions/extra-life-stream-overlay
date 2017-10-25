@@ -9,6 +9,15 @@
     <script src="/content/overlay.js"></script>
   </head>
   <body>
+    <div id="donation_notification">
+      <transition name="notification-slide" v-on:after-enter="pop" v-on:after-leave="notifyExit">
+        <div id="donation_container" v-if="showNotification">
+          <h1>Donation Get!</h1>
+          <div class="attribution">{{from}} donated ${{amount}} for {{displayName}}</div>
+          <div class="message" v-if="message">Saying: <em>{{message}}</em></div>
+        </div>
+      </transition>
+    </div>
     <div id="overlay_root">
       <div id="top">
         <div id="logos">
