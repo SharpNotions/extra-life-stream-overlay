@@ -7,9 +7,29 @@ A stream overlay service to provide interactivity during our Extra Life game day
 
 - [node.js required](https://nodejs.org/en/) and grab some [Yarn](https://github.com/yarnpkg/yarn)
 - `yarn`
+- Create your .env file (see below)
 - `yarn start` Or `yarn start:dev` -- this will run the server with Nodemon watching
 - Navigate to [http://localhost:3000/](http://localhost:3000/)
 
+## ENV file
+
+A .env file is required at the root of this project in order to know what team it is tracking.
+
+### Required entries
+
+```
+TEAM_ID={your team number here}
+```
+
+### Optional entries
+
+Default values are presented below
+
+```
+DEBUG=false - prevents outputs debugging messages to console
+LIVE=true - Extra Life API calls execute against website instead of samples
+POLL_DELAY=60000 - how often the service polls for changes
+```
 
 ## Credits
 <p align="center">
