@@ -21,13 +21,20 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "dotenv": "^4.0.0",
+    "ejs": "^2.5.7",
     "express": "^4.15.3",
-    "express-handlebars": "^3.0.0",
+    "moment": "^2.19.1",
     "request": "^2.81.0",
-    "socket.io": "^2.0.3"
+    "socket.io": "^2.0.3",
+    "vue": "^2.5.2"
   },
   "devDependencies": {
     "eslint": "^4.8.0",
     "nodemon": "^1.12.1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "app/content/*"
+    ]
   }
 }

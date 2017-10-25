@@ -2,7 +2,6 @@ const cfg = require('./config');
 const http = require('http');
 const path = require('path');
 const express = require('express');
-const hbs = require('express-handlebars');
 const SocketServer = require('socket.io');
 
 const routes = require('./routes/routes');
@@ -21,13 +20,8 @@ const publicSockets = io.of('/public');
 const extraLife = require('./el');
 
 webapp.set('views', viewsDir);
-webapp.engine('hbs', hbs({
-  extname: '.hbs',
-  layoutsDir: layoutsDir,
-  partialsDir: partialsDir,
-  defaultLayout: 'main.hbs'
-}));
-webapp.set('view engine', 'hbs');
+webapp.set('view engine', 'ejs');
+webapp.engine('ejs', require('ejs').renderFile);
 webapp.use('/content', express.static(staticDir));
 
 //initialize routes

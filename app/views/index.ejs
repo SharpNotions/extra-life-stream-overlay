@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%=(title || "It's a stream thing") %></title>
+    <link rel="stylesheet" type="text/css" href="/content/styles.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/content/vue.js"></script>
+    <script src="/content/moment.min.js"></script>
+    <script src="/content/overlay.js"></script>
+  </head>
+  <body>
+    <div id="overlay_root">
+      <div id="top">
+        <div id="logos">
+          <img src="/content/sn-logo.png" id="sn_logo" />
+          <img src="/content/el-logo.png" id="el_logo" />
+        </div>
+        <div id="top_center">
+          <div id="allstar">
+            Top Team Member:
+            <span class="highlight">{{top.displayName}} ${{top.raised}}</span>
+          </div>
+          <div id="recent_donation">
+            Latest Donation:
+            <span class="highlight">${{latest.amount}} from {{latest.from}} for {{latest.displayName}}</span>
+          </div>
+        </div>
+        <div id="timers">
+          <div>Local time: <span class="highlight">{{localTime}}</span></div>
+          <div>Time played: <span class="highlight">{{timePlayed}}</span></div>
+          <div>Time to go: <span class="highlight">{{timeRemaining}}</span></div>
+        </div>
+      </div>
+      <div id="right">
+        <div id="roster">
+          <h1>Team Roster</h1>
+          <ol>
+            <li v-for="member in contributors"><member v-bind:data="member"></member></li>
+          </ol>
+        </div>
+        <div id="current_action">
+          <h1>Currently Playing</h1>
+          <h2>Mario Kart 8</h2>
+        </div>
+        <div id="cam_placeholder"></div>
+      </div>
+      <div id="bottom">
+        <div id="progress">
+          <div id="goal_amount">Goal: ${{goal}}</div>
+          <div id="bar" v-bind:style="pct">
+            <div id="progress_amount">Total Raised: ${{raised}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
