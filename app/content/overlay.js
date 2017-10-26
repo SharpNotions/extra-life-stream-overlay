@@ -197,6 +197,15 @@ function setupPage() {
   });
   socket.on('donations', data => {
     console.log('donations!', data);
+    const displayName = data.name;
+    data.donors.forEach(donor => {
+      notification.show({
+        displayName: displayName,
+        from: donor.donorName || 'Anonymous',
+        amount: donor.donationAmount,
+        message: donor.message || ''
+      });
+    });
   });
   socket.on('member-update', member => {
     console.log('member-updated', member);
