@@ -987,6 +987,10 @@ forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
 
+framesync@^3.0.1:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/framesync/-/framesync-3.0.2.tgz#b68cd741af9fe9c15477266260cee1924670a08c"
+
 fresh@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
@@ -1932,6 +1936,12 @@ pinkie@^2.0.0:
 pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
+
+popmotion@^7.8.2:
+  version "7.8.2"
+  resolved "https://registry.yarnpkg.com/popmotion/-/popmotion-7.8.2.tgz#984ecbdc1ea70c022ee8d4bc36a4317ed619ba1d"
+  dependencies:
+    framesync "^3.0.1"
 
 prelude-ls@~1.1.2:
   version "1.1.2"

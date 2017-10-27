@@ -1,192 +1,113 @@
-import { TweenLite, Power4 } from './shim/TweenLight';
-import _ from 'lodash';
+import { tween, easing } from 'popmotion';
 
-// utilities
-function getLength(x0, y0, x1, y1) {
-  // returns the length of a line segment
-  const x = x1 - x0;
-  const y = y1 - y0;
-  return Math.sqrt(x * x + y * y);
-}
+const randomInt = (min, max) => {
+  return Math.round(Math.random() * (max - min)) + min;
+};
+const random = (min, max) => {
+  return Math.random() * (max - min) + min;
+};
 
-function getDegAngle(x0, y0, x1, y1) {
-  const y = y1 - y0;
-  const x = x1 - x0;
-  return Math.atan2(y, x) * (180 / Math.PI);
-}
+class Particle {
+  constructor(x, y, dx, dy, duration){
+    this._x = x;
+    this.initialX = x;
+    this.initialY = y;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+    this.duration = duration;
+    this.alpha = 1;
 
-// some constants
-const DECAY = 4;        // confetti decay in seconds
-const SPREAD = 60;      // degrees to spread from the angle of the cannon
-const GRAVITY = 1200;
+    this.rotation = randomInt(4,6);
+    this.depth = randomInt(15,25);
+    this.color = {
+      r: randomInt(30,254),
+      g: randomInt(30,230),
+      b: randomInt(30,230)
+    };
+    this.tilt = randomInt(-10, 10);
+    this.tiltAngleIncrement = random(0.05, 0.07);
+    this.tiltAngle = 0;
+    this.render = null;
 
-class ConfettiCannon {
-  constructor(canvasId) {
-    // setup a canvas
-    this.canvas = document.getElementById(canvasId || 'canvas');
-    this.dpr = window.devicePixelRatio || 1;
-    this.ctx = this.canvas.getContext('2d');
-    this.ctx.scale(this.dpr, this.dpr);
-
-    // add confetti here
-    this.confettiSpriteIds = [];
-    this.confettiSprites = {};
-      
-    // vector line representing the firing angle
-    this.drawVector = false;
-    this.vector = [{
-      x: window.innerWidth, 
-      y: window.innerHeight * 1.25,
-    }, {
-      x: window.innerWidth, 
-      y: window.innerHeight * 2,
-    }];
-      
-    // bind methods
-    this.render = this.render.bind(this);
-    this.setCanvasSize = this.setCanvasSize.bind(this);
-      
-    this.setupListeners();
-    this.setCanvasSize();
-  }
-  
-  setupListeners() {
-    // Use TweenLite tick event for the render loop
-    TweenLite.ticker.addEventListener('tick', this.render);
-      
-    // bind events
-    window.addEventListener('resize', this.setCanvasSize);
+    let distance = randomInt(Particle.MIN_DISTANCE, Particle.MIN_DISTANCE + 300);
+    if(this.dx < 0){
+      distance *= -1;
+    }
+    this.distance = distance;
   }
 
-  setCanvasSize() {
-    this.canvas.width = window.innerWidth * this.dpr;
-    this.canvas.height = window.innerHeight * this.dpr;
-    this.canvas.style.width = window.innerWidth + 'px';
-    this.canvas.style.height = window.innerHeight + 'px';
+  get x(){
+    return this._x;
+  }
+  set x(val) {
+    if(isNaN(val)){
+      throw new Error('here');
+    }
+    this._x = val;
   }
 
-  shootConfetti(x0, y0, x1, y1){
-    x0 *= this.dpr;
-    y0 *= this.dpr;
-    x1 *= this.dpr;
-    y1 *= this.dpr;
+  static get MIN_DISTANCE() { return 400; }
 
-    this.vector[0].x = x0;
-    this.vector[0].y = y0;
-    this.vector[1].x = x1;
-    this.vector[1].y = y1;
-
-    const length = getLength(x0, y0, x1, y1);
-    const angle = getDegAngle(x0, y0, x1, y1) + 180;
-
-    const particles = length / 5 + 5;
-    const velocity = length * 10;
-    this.addConfettiParticles(particles, angle, velocity, x0, y0);
+  getColor(){
+    return `rgba(${this.color.r},${this.color.g},${this.color.b},${this.alpha})`;
   }
-  
-  addConfettiParticles(amount, angle, velocity, x, y) {
-    let i = 0;
-    while (i < amount) {
-      // sprite
-      const r = _.random(4, 6) * this.dpr;
-      const d = _.random(15, 25) * this.dpr;
-          
-      const cr = _.random(30, 255);
-      const cg = _.random(30, 230);
-      const cb = _.random(30, 230);
-      const color = `rgb(${cr}, ${cg}, ${cb})`;
-          
-      const tilt = _.random(10, -10);
-      const tiltAngleIncremental = _.random(0.07, 0.05);
-      const tiltAngle = 0;
+  tick(v){
+    const eased = easing.easeOut(v);
+    
+    const tiltAngle = 0.0005 * this.depth;
+    this.tiltAngle += tiltAngle;
+    this.tiltAngle += this.tiltAngleIncrement;
+    this.tilt = Math.sin(this.tiltAngle - this.rotation / 2) * this.rotation * 2;
+    
+    this.alpha = 1 - eased;
+    this.x = this.initialX + this.distance * eased;
+    this.y -= this.dy;
+    this.dy -= 0.1;
 
-      const id = _.uniqueId();
-      const sprite = {
-        [id]: {
-          angle,
-          velocity,
-          x,
-          y,
-          r,
-          d,
-          color,
-          tilt,
-          tiltAngleIncremental,
-          tiltAngle,
-        },
-      };
-
-      Object.assign(this.confettiSprites, sprite);
-      this.confettiSpriteIds.push(id);
-      this.tweenConfettiParticle(id);
-      i++;
+    if(this.render){
+      this.render(this);
     }
   }
+}
 
-  tweenConfettiParticle(id) {
-    const minAngle = this.confettiSprites[id].angle - SPREAD / 2;
-    const maxAngle = this.confettiSprites[id].angle + SPREAD / 2;
-      
-    const minVelocity = this.confettiSprites[id].velocity / 4;
-    const maxVelocity = this.confettiSprites[id].velocity;
-
-    // Physics Props
-    const velocity = _.random(minVelocity, maxVelocity);
-    const angle = _.random(minAngle, maxAngle);
-    const gravity = GRAVITY;
-    const friction = _.random(0.1, 0.25);
-    const d = 0;
-
-    TweenLite.to(this.confettiSprites[id], DECAY, {
-      physics2D: {
-        velocity,
-        angle,
-        gravity,
-        friction,
-      },
-      d,
-      ease: Power4.easeIn,
-      onComplete: () => {
-        // remove confetti sprite and id
-        _.pull(this.confettiSpriteIds, id);
-        delete this.confettiSprites[id];
-      },
+class Cannon{
+  constructor(canvasId){
+    this.canvas = document.getElementById(canvasId);
+    this.ctx = this.canvas.getContext('2d');
+  }
+  renderer(particle){
+    this.context.beginPath();
+    this.context.lineWidth = particle.depth / 2;
+    this.context.strokeStyle = particle.getColor();
+    this.context.moveTo(particle.x + particle.tilt + particle.rotation, particle.y);
+    this.context.lineTo(particle.x + particle.tilt, particle.y + particle.tilt + particle.rotation);
+    this.context.stroke();
+  }
+  shoot(config){
+    const particles = [];
+    config.forEach(cfg => {
+      for(let idx = 0; idx < cfg.count; idx++){
+        let p = null;
+        if(cfg.isLeft){
+          p = new Particle(cfg.x, cfg.y, random(-6, -14), random(-1, 6));
+        } else {
+          p = new Particle(cfg.x, cfg.y, random(-6, -14), random(-1, 6));
+        }
+        p.render = this.renderer;
+      }
     });
-  }
 
-  updateConfettiParticle(id) {
-    const sprite = this.confettiSprites[id];
-      
-    const tiltAngle = 0.0005 * sprite.d;
-      
-    sprite.angle += 0.01;
-    sprite.tiltAngle += tiltAngle;
-    sprite.tiltAngle += sprite.tiltAngleIncremental;
-    sprite.tilt = (Math.sin(sprite.tiltAngle - (sprite.r / 2))) * sprite.r * 2;
-    sprite.y += Math.sin(sprite.angle + sprite.r / 2) * 2;
-    sprite.x += Math.cos(sprite.angle) / 2;
-  }
-
-  drawConfetti() {
-    this.confettiSpriteIds.map(id => {
-      const sprite = this.confettiSprites[id];
-          
-      this.ctx.beginPath();
-      this.ctx.lineWidth = sprite.d / 2;
-      this.ctx.strokeStyle = sprite.color;
-      this.ctx.moveTo(sprite.x + sprite.tilt + sprite.r, sprite.y);
-      this.ctx.lineTo(sprite.x + sprite.tilt, sprite.y + sprite.tilt + sprite.r);
-      this.ctx.stroke();
-
-      this.updateConfettiParticle(id);
-    });
-  }
-  
-  render() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      
-    this.drawConfetti();
+    return tween({
+      from: 0,
+      to: 1,
+      duration: 3000,
+      onUpdate: v => {
+        this.context.clearRect(0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight);
+        particles.forEach(p => p.tick(v));
+      }
+    }).start();
   }
 }
-  
-export default ConfettiCannon;
+
+export default Cannon;

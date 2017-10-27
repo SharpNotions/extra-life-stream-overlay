@@ -5,14 +5,15 @@ import alias from 'rollup-plugin-alias';
 
 function globalMapping(packageName){
   const externs = {
-    'socket.io': 'io'
+    'socket.io': 'io',
+    'popmotion': 'popmotion'
   };
   return externs[packageName];
 }
 
 export default {
   input: 'client/index.js',
-  external: ['socket.io'],
+  external: ['socket.io', 'popmotion'],
   output: {
     file: 'app/content/client.js',
     format: 'iife',
