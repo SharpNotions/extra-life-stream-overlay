@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import moment from 'moment';
 
-
-
 const getLatestDonation = (members) => {
   const donations = [];
   members.forEach(member => {

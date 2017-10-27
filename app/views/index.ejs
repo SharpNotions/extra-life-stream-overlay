@@ -4,9 +4,10 @@
     <title><%=(title || "It's a stream thing") %></title>
     <link rel="stylesheet" type="text/css" href="/content/styles.css" />
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/content/vue.js"></script>
+    <!-- <script src="/content/vue.js"></script>
     <script src="/content/moment.min.js"></script>
-    <script src="/content/overlay.js"></script>
+    <script src="/content/overlay.js"></script> -->
+    <script src="/content/client.js"></script>
   </head>
   <body>
     <div id="donation_notification">
@@ -62,5 +63,6 @@
         </div>
       </div>
     </div>
+    <canvas width="1280" height="720" id="confetti"></canvas>
   </body>
 </html>
