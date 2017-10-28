@@ -1,8 +1,8 @@
 import Vue from 'vue';
-import ConfettiCannon from './confetti';
+import Cannon from './confetti';
 
 const notification = () => {
-  const cannon = new ConfettiCannon('confetti');
+  const cannon = new Cannon('confetti');
   return new Vue({
     el:'#donation_notification',
     data:{
@@ -44,8 +44,10 @@ const notification = () => {
         const height = rect.bottom - rect.top;
         const midpoint = Math.floor(rect.top + height / 2);
 
-        cannon.shootConfetti(rect.left, midpoint, rect.left - 780, midpoint+10);
-        cannon.shootConfetti(rect.right, midpoint, rect.right + 780, midpoint+10);
+        cannon.shoot([
+          { x: rect.left, y: midpoint, count: 25, isLeft: true },
+          { x: rect.right, y: midpoint, count: 25 }
+        ]);
         
         setTimeout(() => this.showNotification = false, 4500);
       },

@@ -74,15 +74,16 @@ class Particle {
 class Cannon{
   constructor(canvasId){
     this.canvas = document.getElementById(canvasId);
-    this.ctx = this.canvas.getContext('2d');
-  }
-  renderer(particle){
-    this.context.beginPath();
-    this.context.lineWidth = particle.depth / 2;
-    this.context.strokeStyle = particle.getColor();
-    this.context.moveTo(particle.x + particle.tilt + particle.rotation, particle.y);
-    this.context.lineTo(particle.x + particle.tilt, particle.y + particle.tilt + particle.rotation);
-    this.context.stroke();
+    const ctx = this.canvas.getContext('2d');
+    this.renderer = (particle) => {
+      ctx.beginPath();
+      ctx.lineWidth = particle.depth / 2;
+      ctx.strokeStyle = particle.getColor();
+      ctx.moveTo(particle.x + particle.tilt + particle.rotation, particle.y);
+      ctx.lineTo(particle.x + particle.tilt, particle.y + particle.tilt + particle.rotation);
+      ctx.stroke();
+    };
+    this.ctx = ctx;
   }
   shoot(config){
     const particles = [];
@@ -92,18 +93,18 @@ class Cannon{
         if(cfg.isLeft){
           p = new Particle(cfg.x, cfg.y, random(-6, -14), random(-1, 6));
         } else {
-          p = new Particle(cfg.x, cfg.y, random(-6, -14), random(-1, 6));
+          p = new Particle(cfg.x, cfg.y, random(6, 14), random(-1, 6));
         }
         p.render = this.renderer;
+        particles.push(p);
       }
     });
-
     return tween({
       from: 0,
       to: 1,
       duration: 3000,
       onUpdate: v => {
-        this.context.clearRect(0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight);
+        this.ctx.clearRect(0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight);
         particles.forEach(p => p.tick(v));
       }
     }).start();

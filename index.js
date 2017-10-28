@@ -7,9 +7,7 @@ app.server.listen(3000, function(){
   
   //copy in a few content assets
   copyFile([
-    './node_modules/vue/dist/vue.js',
-    './node_modules/vue/dist/vue.min.js',
-    './node_modules/moment/min/moment.min.js'
+    './node_modules/popmotion/dist/popmotion.min.js'
   ], './app/content/').catch(err => {
     console.error('Unhandled error copying files.');
     console.error(err);
