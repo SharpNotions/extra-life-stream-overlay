@@ -5,6 +5,7 @@ import progressBar from './progress-bar';
 import roster from './roster';
 import timers from './timers';
 import sockets from './sockets';
+import nowPlaying from './now-playing';
 
 const views = {};
 
@@ -17,6 +18,7 @@ document.onreadystatechange = () => {
     views.donationProgress = progressBar();
     views.roster = roster();
     views.timers = timers();
+    views.nowPlaying = nowPlaying();
 
     sockets(views);
   }

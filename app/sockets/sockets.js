@@ -1,24 +1,22 @@
-'use strict';
+// const scanDirectory = require('../scanDirectory');
+// const path = require('path');
 
-const scanDirectory = require('../scanDirectory');
-const path = require('path');
+// const publicFunctions = [];
 
-const publicFunctions = [];
-
-scanDirectory(path.join(__dirname, 'public')).forEach(file => {
-  publicFunctions.push(require(file));
-});
+// scanDirectory(path.join(__dirname, 'public')).forEach(file => {
+//   publicFunctions.push(require(file));
+// });
 
 const setup = {
-  public: (io) => {
-    io.on('connect', socket => {
-      console.log('Hello public user');
-      socket.on('disconnect', () => {
-        console.log('Goodbye public user');
-      });
-      publicFunctions.forEach(fn => fn(io, socket));
-    });
-  }
+  public: require('./public')// (io) => {
+  //   io.on('connect', socket => {
+  //     console.log('Hello public user');
+  //     socket.on('disconnect', () => {
+  //       console.log('Goodbye public user');
+  //     });
+  //     publicFunctions.forEach(fn => fn(io, socket));
+  //   });
+  // }
 }
 
 module.exports = setup;

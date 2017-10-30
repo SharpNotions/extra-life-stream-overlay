@@ -11,26 +11,57 @@ function globalMapping(packageName){
   return externs[packageName];
 }
 
-export default {
-  input: 'client/index.js',
-  external: ['socket.io', 'popmotion'],
-  output: {
-    file: 'app/content/client.js',
-    format: 'iife',
-    name: 'views',
-    globals: globalMapping
+export default [
+  {
+    input: 'client/index.js',
+    external: ['socket.io', 'popmotion'],
+    output: {
+      file: 'app/content/client.js',
+      format: 'iife',
+      name: 'views',
+      globals: globalMapping
+    },
+    plugins: [
+      alias({
+        vue: require.resolve('vue/dist/vue.min')
+      }),
+      resolve({
+        jsnext: true,
+        browser: true
+      }),
+      commonjs({
+        sourceMap: false
+      }),
+      json()
+    ],
+    watch:{
+      include: [ 'client/**' ]
+    }
   },
-  plugins: [
-    alias({
-      vue: require.resolve('vue/dist/vue.min')
-    }),
-    resolve({
-      jsnext: true,
-      browser: true
-    }),
-    commonjs({
-      sourceMap: false
-    }),
-    json()
-  ]
-};
+  {
+    input: 'control-panel/index.js',
+    external: ['socket.io'],
+    output: {
+      file: 'app/content/control.js',
+      format: 'iife',
+      name: 'views',
+      globals: globalMapping
+    },
+    plugins: [
+      alias({
+        vue: require.resolve('vue/dist/vue.min')
+      }),
+      resolve({
+        jsnext: true,
+        browser: true
+      }),
+      commonjs({
+        sourceMap: false
+      }),
+      json()
+    ],
+    watch:{
+      include:[ 'control-panel/**' ]
+    }
+  }
+];

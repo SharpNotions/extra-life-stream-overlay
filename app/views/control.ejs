@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Streaming Control Panel</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/content/control.js"></script>
+    <style type="text/css">
+    *{
+      box-sizing: border-box;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+    label{
+      display:flex;
+      padding: 4px;
+      max-width: 400px;
+    }
+    label>span{
+      width: 20%;
+      text-align: right;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+    label>span::after{
+      content:': ';
+    }
+    label [type="text"],label [type="number"]{
+      max-width: 200px;
+    }
+    button[type="submit"]{
+      font-weight:bold;
+    }
+    div.buttons{
+      max-width:400px;
+    }
+    div.buttons button[type="button"]{
+      display:inline-block;
+      width:20%;
+      margin-right:3px;
+    }
+
+    </style>
+  </head>
+  <body>
+    <div id="now_playing">
+      <form v-on:submit.prevent="update">
+        <h1>Now Playing</h1>
+        <div>
+          <label>
+            <span>Title</span><input type="text" v-model.trim="title" />
+          </label>
+        </div>
+        <div>
+          <label>
+            <span>Game</span><input type="text" v-model.trim="game" />
+          </label>
+        </div>
+        <div class="buttons">
+          <button type="button" v-on:click="refresh">Reset</button>
+          <button type="submit" v-on:click="update">Update Overlay</button>
+        </div>
+      </form>
+    </div>
+    <div id="webcam">
+      <form>
+        <h1>Webcam</h1>
+        <div>
+          <label>
+            <input type="checkbox" v-model="enabled" />
+            {{ enabled ? 'Visible' : 'Hidden' }}
+          </label>
+        </div>
+      </form>
+    </div>
+    <div id="test_donation">
+      <form v-on:submit.prevent="display">
+        <h1>Test Donation</h1>
+        <div>
+          <label>
+            <span>From</span><input type="text" v-model="donorName" required />
+          </label>
+        </div>
+        <div>
+          <label>
+            <span>To</span><input type="text" v-model="name" required />
+          </label>
+        </div>
+        <div>
+          <label>
+            <span>Amount</span><input type="number" v-model.number="amount" required />
+          </label>
+        </div>
+        <div>
+          <label>
+            <span>Message</span><input type="text" v-model="message" />
+          </label>
+        </div>
+        <div class="buttons">
+          <button type="button" v-on:click="clear">Clear</button>
+          <button type="submit">Display Notification</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

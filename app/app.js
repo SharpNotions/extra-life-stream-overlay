@@ -10,8 +10,6 @@ const sockets = require('./sockets/sockets');
 const appRootDir = __dirname;
 const staticDir = path.join(appRootDir, 'content');
 const viewsDir = path.join(appRootDir, 'views');
-const layoutsDir = path.join(appRootDir, 'views', 'layouts');
-const partialsDir = path.join(appRootDir, 'views', 'layouts');
 
 const webapp = express();
 const server = http.createServer(webapp);
