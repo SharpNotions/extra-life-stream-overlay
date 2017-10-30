@@ -3,7 +3,6 @@ const path = require('path');
 
 const extraLifeUpdates = require('./el-updates');
 const socketListeners = scanDirectory(path.resolve(__dirname, './per-socket'), [], '.js', false).map(path => require(path));
-console.log('socket listeners', socketListeners);
 
 module.exports = (io) => {
   extraLifeUpdates(io, 'overlay');
