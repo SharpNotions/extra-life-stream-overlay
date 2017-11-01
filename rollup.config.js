@@ -11,6 +11,22 @@ function globalMapping(packageName){
   return externs[packageName];
 }
 
+function rollupPlugins() {
+  return [
+    alias({
+      vue: require.resolve('vue/dist/vue.min')
+    }),
+    resolve({
+      jsnext: true,
+      browser: true
+    }),
+    commonjs({
+      sourceMap: false
+    }),
+    json()
+  ]
+}
+
 export default [
   {
     input: 'client/index.js',
@@ -21,19 +37,7 @@ export default [
       name: 'views',
       globals: globalMapping
     },
-    plugins: [
-      alias({
-        vue: require.resolve('vue/dist/vue.min')
-      }),
-      resolve({
-        jsnext: true,
-        browser: true
-      }),
-      commonjs({
-        sourceMap: false
-      }),
-      json()
-    ],
+    plugins: rollupPlugins(),
     watch:{
       include: [ 'client/**' ]
     }
@@ -47,19 +51,7 @@ export default [
       name: 'views',
       globals: globalMapping
     },
-    plugins: [
-      alias({
-        vue: require.resolve('vue/dist/vue.min')
-      }),
-      resolve({
-        jsnext: true,
-        browser: true
-      }),
-      commonjs({
-        sourceMap: false
-      }),
-      json()
-    ],
+    plugins: rollupPlugins(),
     watch:{
       include:[ 'control-panel/**' ]
     }

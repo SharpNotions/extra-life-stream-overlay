@@ -3,6 +3,7 @@ const http = require('http');
 const path = require('path');
 const express = require('express');
 const SocketServer = require('socket.io');
+const favicon = require('serve-favicon');
 
 const routes = require('./routes/routes');
 const sockets = require('./sockets/sockets');
@@ -21,6 +22,7 @@ webapp.set('views', viewsDir);
 webapp.set('view engine', 'ejs');
 webapp.engine('ejs', require('ejs').renderFile);
 webapp.use('/content', express.static(staticDir));
+webapp.use(favicon(__dirname + '/favicon.ico'));
 
 //initialize routes
 routes(webapp);
