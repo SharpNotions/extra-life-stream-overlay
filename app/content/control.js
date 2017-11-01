@@ -134,7 +134,9 @@ var testDonation = () => new Vue({
   }
 });
 
-const views = {};
+const views = {
+  socket: socket
+};
 
 document.onreadystatechange = () => {
   if(document.readyState === 'interactive'){

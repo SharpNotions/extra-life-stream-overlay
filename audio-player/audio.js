@@ -8,11 +8,8 @@ class AudioPlayer {
       if(this.files.has(url)){
         resolve(this.files.get(url));
       } else {
-        this.files.set(url, thePromise);
         var req = new XMLHttpRequest();
-        req.open('GET', url, true);
-        req.responseType = 'arraybuffer';
-        req.onload = () => {
+        req.addEventListener('load', () => {
           this.context.decodeAudioData(req.response, (audioData) => {
             if(!audioData){
               reject('Audio decoder error');
@@ -21,12 +18,16 @@ class AudioPlayer {
               resolve(audioData);
             }
           });
-        };
-        req.onerror = () => {
-          reject('HTTP error');
-        }
+        });
+        req.addEventListener('error', () => reject('HTTP error'));
+        req.responseType = 'arraybuffer';
+        req.open('GET', url, true);
+        req.send();
       }
     });
+    if(!this.files.has(url)){
+      this.files.set(url, thePromise);      
+    }
     return thePromise;
   }
   play(url){

@@ -3,7 +3,7 @@ import socket from './socket';
 
 document.onreadystatechange = () => {
   if(document.readyState === 'interactive'){
-    socket.on('playsound', (data) => {
+    socket.on('play-audio', (data) => {
       if(data.file){
         audio.play(`/content/audio/${data.file}`);
       } else {

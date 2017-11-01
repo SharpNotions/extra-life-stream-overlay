@@ -1,8 +1,11 @@
 import nowPlaying from './now-playing';
 import webcam from './webcam';
 import testDonation from './test-donation';
+import socket from './sockets';
 
-const views = {};
+const views = {
+  socket: socket
+};
 
 document.onreadystatechange = () => {
   if(document.readyState === 'interactive'){

@@ -37,8 +37,8 @@
       width:20%;
       margin-right:3px;
     }
-
     </style>
+    <link rel="stylesheet" type="text/css" href="/content/basic.min.css" />
   </head>
   <body>
     <div id="now_playing">
@@ -100,5 +100,22 @@
         </div>
       </form>
     </div>
+    <div>
+      <h1>Upload Audio</h1>
+      <form action="/api/audio" class="dropzone" id="audioUpload"></form>
+    </div>
+    <script type="text/javascript" src="/content/dropzone.min.js"></script>
+    <script type="text/javascript">
+    Dropzone.options.audioUpload = {
+      paramName: 'sound',
+      init: function(){
+        this.on('error', (error, msg, xhr) => {
+          if(msg==='420'){
+            alert('Yo, chill out man... that like, file has already been uploaded.');
+          }
+        });
+      }
+    };
+    </script>
   </body>
 </html>
