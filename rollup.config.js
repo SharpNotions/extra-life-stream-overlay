@@ -55,5 +55,16 @@ export default [
     watch:{
       include:[ 'control-panel/**' ]
     }
+  },
+  {
+    input: 'audio-player/index.js',
+    external: ['socket.io'],
+    output:{
+      file: 'app/content/audio.js',
+      format: 'iife',
+      name: 'audioControl',
+      globals: globalMapping
+    },
+    plugins: []
   }
 ];

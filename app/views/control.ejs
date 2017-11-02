@@ -9,6 +9,28 @@
       box-sizing: border-box;
       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     }
+    body {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      height: 100vh;
+      align-content: flex-start;
+      padding: 0;
+      margin: 0;
+    }
+
+    body>div {
+      border: 1px solid gray;
+      margin-top: 1em;
+      width: 30%;
+      padding: 1em;
+      margin-left: 1em;
+    }
+
+    #audio_control {
+      max-height: 90vh;
+      overflow: auto;
+    }
     label{
       display:flex;
       padding: 4px;
@@ -36,9 +58,17 @@
       display:inline-block;
       width:20%;
       margin-right:3px;
+    },
+    .audio-link{
+      cursor: pointer;
     }
-
+    .audio-link:hover{
+      background: darkgray;
+      text-decoration: underline;
+      color:navy;
+    }
     </style>
+    <link rel="stylesheet" type="text/css" href="/content/basic.min.css" />
   </head>
   <body>
     <div id="now_playing">
@@ -100,5 +130,26 @@
         </div>
       </form>
     </div>
+    <div>
+      <h1>Upload Audio</h1>
+      <form action="/api/audio" class="dropzone" id="audioUpload"></form>
+    </div>
+    <div id="audio_control">
+      <h1>Audio Files</h1>
+      <div v-for="file in files" class="audio-link" @click="playFile(file)">{{file}}</div>
+    </div>
+    <script type="text/javascript" src="/content/dropzone.min.js"></script>
+    <script type="text/javascript">
+    Dropzone.options.audioUpload = {
+      paramName: 'sound',
+      init: function(){
+        this.on('error', (error, msg, xhr) => {
+          if(msg==='420'){
+            alert('Yo, chill out man... that like, file has already been uploaded.');
+          }
+        });
+      }
+    };
+    </script>
   </body>
 </html>

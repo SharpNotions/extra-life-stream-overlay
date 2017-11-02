@@ -14,7 +14,6 @@ app.server.listen(3000, function(){
       acc.push(...item);
       return acc;
     }, [])
-    .filter(nfo => nfo.mac !== '00:00:00:00:00:00')
     .forEach(nfo => {
       console.log(`    http://${nfo.address}:3000`);
     });
@@ -24,7 +23,9 @@ app.server.listen(3000, function(){
 
   //copy in a few content assets
   copyFile([
-    './node_modules/popmotion/dist/popmotion.min.js'
+    './node_modules/popmotion/dist/popmotion.min.js',
+    './node_modules/dropzone/dist/min/basic.min.css',
+    './node_modules/dropzone/dist/min/dropzone.min.js'
   ], './app/content/').catch(err => {
     console.error('Unhandled error copying files.');
     console.error(err);

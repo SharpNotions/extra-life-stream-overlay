@@ -134,13 +134,35 @@ var testDonation = () => new Vue({
   }
 });
 
-const views = {};
+var audio = () => {
+  return new Vue({
+    el: '#audio_control',
+    data: {
+      files: []
+    },
+    methods:{
+      playFile: function(filename){
+        socket.emit('play-audio', { file: filename });
+      }
+    },
+    mounted: function(){
+      socket.on('audio-added', (response) => {
+        this.files.push(...response.files);
+      });
+    }
+  })
+};
+
+const views = {
+  socket: socket
+};
 
 document.onreadystatechange = () => {
   if(document.readyState === 'interactive'){
     views.nowPlaying = nowPlaying();
     views.webcam = webcam();
     views.testDonation = testDonation();
+    views.audio = audio();
   }
 };
 
