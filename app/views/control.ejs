@@ -9,6 +9,28 @@
       box-sizing: border-box;
       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     }
+    body {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      height: 100vh;
+      align-content: flex-start;
+      padding: 0;
+      margin: 0;
+    }
+
+    body>div {
+      border: 1px solid gray;
+      margin-top: 1em;
+      width: 30%;
+      padding: 1em;
+      margin-left: 1em;
+    }
+
+    #audio_control {
+      max-height: 90vh;
+      overflow: auto;
+    }
     label{
       display:flex;
       padding: 4px;
@@ -103,6 +125,10 @@
     <div>
       <h1>Upload Audio</h1>
       <form action="/api/audio" class="dropzone" id="audioUpload"></form>
+    </div>
+    <div id="audio_control">
+      <h1>Audio Files</h1>
+      <div v-for="file in files" class="audio-link" @click="playFile(file)">{{file}}</div>
     </div>
     <script type="text/javascript" src="/content/dropzone.min.js"></script>
     <script type="text/javascript">

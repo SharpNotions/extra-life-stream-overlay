@@ -1,3 +1,5 @@
+const audio = require('../../../../../data/audio');
+
 module.exports = (io, socket) => {
   socket.on('play-audio', (data) => {
     if(data && data.file){
@@ -6,4 +8,8 @@ module.exports = (io, socket) => {
       console.warn('[Socket] audio request did not contain a file property');
     }
   });
+  audio.on('add', file => {
+    socket.emit('audio-added', { files: [ file ]});
+  });
+  socket.emit('audio-added', { files: audio.files });
 };

@@ -28,19 +28,6 @@ class AudioPlayer {
         req.responseType = 'arraybuffer';
         req.open('GET', url, true);
         req.send();
-        // req.onload = () => {
-        //   this.context.decodeAudioData(req.response, (audioData) => {
-        //     if(!audioData){
-        //       reject('Audio decoder error');
-        //     } else {
-        //       this.files.set(url, audioData);
-        //       resolve(audioData);
-        //     }
-        //   });
-        // };
-        // req.onerror = () => {
-        //   reject('HTTP error');
-        // }
       }
     });
     if(!this.files.has(url)){
@@ -80,7 +67,7 @@ socket.on('disconnect', () => console.log(`[Socket] ${socket.id} disconnected`))
 
 document.onreadystatechange = () => {
   if(document.readyState === 'interactive'){
-    socket.on('playsound', (data) => {
+    socket.on('play-audio', (data) => {
       if(data.file){
         audio.play(`/content/audio/${data.file}`);
       } else {

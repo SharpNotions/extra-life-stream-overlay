@@ -3,6 +3,7 @@ const multer = require('multer');
 const extraLife = require('../../el');
 const path = require('path');
 const fs = require('fs');
+const audio = require('../../data/audio');
 
 const audioFolder = path.resolve(__dirname, '../../content/audio/');
 
@@ -41,14 +42,12 @@ api.post('/audio', upload.single('sound'), (req, res) => {
   const file = req.file;
   console.log(`Uploaded ${file.originalname} to ${file.destination} as ${file.filename}`);
   const uploadedFile = path.join(file.destination, file.filename);
-  const finalFile = path.join(file.destination, file.originalname);
-  if(!fs.existsSync){
-    fs.renameSync(uploadedFile, finalFile);
-    res.sendStatus(200);
-  } else {
-    fs.unlinkSync(uploadedFile);
-    res.sendStatus(420);
-  }
+  audio.fileUploaded(uploadedFile, file.originalname)
+    .then(file => {
+      res.sendStatus(200);
+    }, err => {
+      res.status(500).send(err);
+    });
 });
 
 module.exports = (app) => {
