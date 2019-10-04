@@ -23,7 +23,7 @@ app.server.listen(3000, function(){
 
   //copy in a few content assets
   copyFile([
-    './node_modules/popmotion/dist/popmotion.min.js',
+    './node_modules/popmotion/dist/popmotion.global.min.js',
     './node_modules/dropzone/dist/min/basic.min.css',
     './node_modules/dropzone/dist/min/dropzone.min.js'
   ], './app/content/').catch(err => {
