@@ -1,6 +1,6 @@
 const config = require('../config');
 const EventEmitter = require('events');
-const el = require('./extraLifeApi');
+const el = require('extra-life-api');
 
 const events = Object.freeze({
   TEAM_INFO_UPDATED: Symbol(),
@@ -51,7 +51,6 @@ const emit = (eventId, data) => {
         eventName = 'Member Donations Received';
         break;
     }
-
     console.log(new Date(), '[Monitor]', eventName, data);
   }
 };
@@ -61,11 +60,8 @@ const processMemberDonations = (member) => {
   if(!member.donors || !(member.donors instanceof Array)){
     member.donors = [];
   }
-
-  el.getParticipantDonations(member.participantID)
+  el.getUserDonations(member.participantID)
     .then(donors => {
-      donors.reverse();
-
       const newDonors = [];
       for(let idx = 0; idx < donors.length; idx++){
         if(idx >= member.donors.length){
@@ -73,7 +69,6 @@ const processMemberDonations = (member) => {
           member.donors.push(donors[idx]);
         }
       }
-
       if(newDonors.length){
         emit(events.MEMBER_DONATIONS, {
           name: member.displayName,
@@ -84,7 +79,7 @@ const processMemberDonations = (member) => {
 };
 
 const processMemberData = (newRoster) => {
-  newRoster.forEach(member => {
+  newRoster.members.forEach(member => {
     if(TEAM_MEMBERS.has(member.participantID)){
       let memberChanges = false;
       let donationChanges = false;
@@ -134,7 +129,7 @@ const processMemberData = (newRoster) => {
  */
 const processRosterChanges = (newRoster) => {
   let hasChanges = false;
-  newRoster.forEach(member => {
+  newRoster.members.forEach(member => {
     if(!ROSTER.filter(r => r.participantID === member.participantID).length){
       ROSTER.push(member);
       hasChanges = true;

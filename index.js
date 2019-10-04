@@ -19,7 +19,6 @@ app.server.listen(3000, function(){
     });
 
   app.extraLifeApi.monitor.startPolling();
-  
 
   //copy in a few content assets
   copyFile([
