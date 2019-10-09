@@ -63,10 +63,10 @@ const processMemberDonations = (member) => {
   el.getUserDonations(member.participantID)
     .then(donors => {
       const newDonors = [];
-      for(let idx = 0; idx < donors.length; idx++){
+      for(let idx = 0; idx < donors.donations.length; idx++){
         if(idx >= member.donors.length){
-          newDonors.push(donors[idx]);
-          member.donors.push(donors[idx]);
+          newDonors.push(donors.donations[idx]);
+          member.donors.push(donors.donations[idx]);
         }
       }
       if(newDonors.length){
@@ -95,10 +95,10 @@ const processMemberData = (newRoster) => {
         og.avatarImageURL = member.avatarImageURL;
       }
 
-      if(member.raised !== og.raised){
+      if(member.sumDonations !== og.raised){
         memberChanges = true;
         donationChanges = true;
-        og.raised = member.raised;
+        og.raised = member.sumDonations;
       }
 
       if(member.donations !== og.donations){
@@ -180,8 +180,8 @@ const requestTeamInfo = () => {
         teamInfo.fundraisingGoal = ti.fundraisingGoal
         hasChanges = true;
       }
-      if(teamInfo.totalRaisedAmount != ti.totalRaisedAmount){
-        teamInfo.totalRaisedAmount = ti.totalRaisedAmount;
+      if(teamInfo.totalRaisedAmount != ti.sumDonations){
+        teamInfo.totalRaisedAmount = ti.sumDonations;
         hasChanges = true;
       }
 

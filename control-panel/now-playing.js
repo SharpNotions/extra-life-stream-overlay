@@ -5,7 +5,7 @@ export default () => new Vue({
   el:'#now_playing',
   data:{
     title: 'Now Playing',
-    game: 'Extra Life 2017'
+    game: 'Extra Life 2019'
   },
   methods: {
     update: function(){

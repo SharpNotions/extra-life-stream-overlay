@@ -3,12 +3,11 @@ module.exports = (io, socket) => {
     data = data || {};
 
     const donationData = {
-      name: data.name || 'Bob',
+      name: data.name,
       donors: [
         {
-          donorName: data.donorName || 'Tom',
-          donationAmount: data.amount || 15,
-          message: data.message || ''
+          displayName: data.displayName,
+          amount: data.amount
         }
       ]
     };

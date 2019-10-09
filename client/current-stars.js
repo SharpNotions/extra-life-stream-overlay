@@ -4,11 +4,11 @@ import moment from 'moment';
 const getLatestDonation = (members) => {
   const donations = [];
   members.forEach(member => {
-    const memberDonate = member.donors.map(donation => ({
-      amount: donation.donationAmount,
-      from: donation.donorName,
+    const memberDonate = (member.donors || []).map(donation => ({
+      amount: donation.amount,
+      from: donation.displayName,
       displayName: member.displayName,
-      when: moment(donation.createdOn)
+      when: moment(donation.createdDateUTC)
     }));
     donations.push(...memberDonate);
   });
@@ -49,9 +49,9 @@ const topInfo = () => new Vue({
   methods:{
     checkMembers: function(members) {
       if(members && members.length){
-        const top = members[0];
+        const top = members.filter(x => x.sumDonations > 0).sort((a, b) => (a.sumDonations > b.sumDonations) ? -1 : 1)[0];
         this.top.displayName = top.displayName;
-        this.top.raised = top.raised;
+        this.top.raised = top.sumDonations;
 
         const latestDonation = getLatestDonation(members);
         if(latestDonation){
