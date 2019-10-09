@@ -58,3 +58,10 @@ typings/
 .env
 
 app/content/audio/
+app/content/audio.js
+app/content/basic.min.css
+app/content/client.js
+app/content/control.js
+app/content/dropzone.min.js
+app/content/popmotion.global.min.js
+app/content/popmotion.min.js
