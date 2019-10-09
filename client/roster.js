@@ -4,7 +4,7 @@ const rosterMember = {
   template: '<div>{{displayName}} - <span class="highlight">${{raised}}</span></div>',
   props: ['data'],
   computed: {
-    raised: function(){ return this.data.raised },
+    raised: function(){ return this.data.sumDonations },
     displayName: function() { return this.data.displayName; }
   }
 };
@@ -18,7 +18,7 @@ const roster = () => new Vue({
   },
   computed: {
     contributors: function(){
-      return this.members.filter(x => x.raised > 0);
+      return this.members.filter(x => x.sumDonations > 0).sort((a, b) => (a.sumDonations > b.sumDonations) ? -1 : 1);
     }
   },
   components : {

@@ -30,8 +30,8 @@ const setupSockets = (views) => {
     data.donors.forEach(donor => {
       views.notification.show({
         displayName: displayName,
-        from: donor.donorName || 'Anonymous',
-        amount: donor.donationAmount,
+        from: donor.displayName || 'Anonymous',
+        amount: donor.amount,
         message: donor.message || ''
       });
     });

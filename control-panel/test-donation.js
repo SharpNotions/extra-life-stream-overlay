@@ -5,24 +5,23 @@ export default () => new Vue({
   el: '#test_donation',
   data: {
     name: '',
-    donorName: '',
-    amount: 0,
-    message: ''
+    displayName: '',
+    amount: 0
   },
   methods: {
     clear: function(){
       this.name = '';
-      this.donorName = '';
+      this.displayName = '';
       this.amount = 0;
-      this.message = ''
     },
     display: function(){
-      socket.emit('test-notification', {
+      const send = {
         name: this.name,
-        donorName: this.donorName,
-        amount: this.amount,
-        message: this.message
-      });
+        displayName: this.displayName,
+        amount: this.amount
+      };
+      console.log(send);
+      socket.emit('test-notification', send);
       this.clear();
     }
   }
