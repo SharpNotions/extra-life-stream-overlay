@@ -14,7 +14,12 @@ function globalMapping(packageName){
 function rollupPlugins() {
   return [
     alias({
-      vue: require.resolve('vue/dist/vue.min')
+      entries: [
+        {
+          find: "vue",
+          replacement: require.resolve('vue/dist/vue.min')
+        }
+      ]
     }),
     resolve({
       jsnext: true,
