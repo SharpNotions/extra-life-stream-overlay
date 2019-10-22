@@ -102,12 +102,11 @@ class Cannon{
     return tween({
       from: 0,
       to: 1,
-      duration: 3000,
-      onUpdate: v => {
-        this.ctx.clearRect(0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight);
-        particles.forEach(p => p.tick(v));
-      }
-    }).start();
+      duration: 3000
+    }).start(v => {
+      this.ctx.clearRect(0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight);
+      particles.forEach(p => p.tick(v));
+    });
   }
 }
 
