@@ -75,7 +75,8 @@ const processMemberDonations = (member) => {
           donors: newDonors
         });
       }
-    });
+    })
+    .catch(err => false);;
 };
 
 const processMemberData = (newRoster) => {
@@ -152,7 +153,8 @@ const requestTeamRoster = () => {
       } else {
         processMemberData(roster);
       }
-    });
+    })
+    .catch(err => false);;
 };
 
 /**
@@ -189,7 +191,8 @@ const requestTeamInfo = () => {
         emit(events.TEAM_INFO_UPDATED, teamInfo);
       }
       return hasChanges;
-    });
+    })
+    .catch(err => false);
 };
 
 const poll = () => {
