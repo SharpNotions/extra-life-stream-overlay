@@ -17,7 +17,9 @@ class Audio extends EventDispatcher {
     super();
     this[props.files] = [];
     fs.readdir(audioFolder, (err, files) => {
-      this[props.files].push(...files);
+      if (files && files.length) {
+        this[props.files].push(...files);
+      }
     });
   }
   /**
