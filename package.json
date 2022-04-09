@@ -27,7 +27,7 @@
     "express": "^4.17.0",
     "extra-life-api": "^6.0.0",
     "lodash": "^4.17.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "multer": "^1.4.0",
     "popmotion": "^8.7.0",
     "request": "^2.88.0",
