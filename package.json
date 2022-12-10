@@ -24,7 +24,7 @@
     "dotenv": "^8.1.0",
     "dropzone": "^5.5.0",
     "ejs": "^2.7.1",
-    "express": "^4.17.0",
+    "express": "^4.17.3",
     "extra-life-api": "^6.0.0",
     "lodash": "^4.17.0",
     "moment": "^2.24.0",
